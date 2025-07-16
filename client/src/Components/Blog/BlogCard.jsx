@@ -1,7 +1,7 @@
 // BlogCard.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import "./blogcard.css";
+import "./BlogCard.css";
 
 function BlogCard({ blog }) {
   const formattedDate = new Date(blog.createdAt).toLocaleDateString("en-US", {

@@ -11,6 +11,7 @@ export default function BlogForm({ onClose }) {
     image3: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState({ message: "", type: "" });
 
   /* ---------- handlers ---------- */
   const handleChange = (e) => {
@@ -43,24 +44,26 @@ export default function BlogForm({ onClose }) {
         body: fd,
       });
 
-       
-    if (!res.ok) {
+      if (!res.ok) {
         const errorText = await res.text();
         throw new Error("Upload error: " + errorText);
-        }
-    const data = await res.json();
-
-    //   const data = await res.json();
+      }
+      const data = await res.json();
 
       if (res.ok) {
-        alert("✅ Blog created!");
-        onClose();
+        setToast({ message: "✅ Blog created!", type: "success" });
+        setTimeout(() => {
+          setToast({ message: "", type: "" });
+          onClose();
+        }, 3000); // Auto-close toast after 3 seconds
       } else {
-        alert("❌ " + (data.error || "Failed to create blog"));
+        setToast({ message: "❌ " + (data.error || "Failed to create blog"), type: "error" });
+        setTimeout(() => setToast({ message: "", type: "" }), 3000);
       }
     } catch (err) {
       console.error("Upload error:", err);
-      alert("❌ Network / server error");
+      setToast({ message: "❌ Network / server error", type: "error" });
+      setTimeout(() => setToast({ message: "", type: "" }), 3000);
     } finally {
       setIsSubmitting(false);
     }
@@ -100,19 +103,19 @@ export default function BlogForm({ onClose }) {
 
           {/* three image inputs (same backend field name) */}
           <div className="image-inputs">
-            <label>Image 1</label>
+            <label>Image 1</label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => handleImageChange(e, "image1")}
             />
-            <label>Image 2</label>
+            <label>Image 2</label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => handleImageChange(e, "image2")}
             />
-            <label>Image 3</label>
+            <label>Image 3</label>
             <input
               type="file"
               accept="image/*"
@@ -122,7 +125,11 @@ export default function BlogForm({ onClose }) {
 
           <div className="modal-buttons">
             <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Uploading…" : "Submit"}
+              {isSubmitting ? (
+                <span className="loading-spinner"></span>
+              ) : (
+                "Submit"
+              )}
             </button>
             <button
               type="button"
@@ -134,6 +141,13 @@ export default function BlogForm({ onClose }) {
             </button>
           </div>
         </form>
+
+        {/* Toast Notification */}
+        {toast.message && (
+          <div className={`toast ${toast.type}`}>
+            {toast.message}
+          </div>
+        )}
       </div>
     </div>
   );
