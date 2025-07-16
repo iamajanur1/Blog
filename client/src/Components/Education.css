@@ -1,0 +1,10 @@
+.circle::before{
+    border-left: 2px solid #fff;
+    content: "";
+    height: 70%;
+    left: -3px;
+    position: absolute;
+    top: 22px;
+    bottom: 10px;
+
+}

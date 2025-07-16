@@ -1,0 +1,165 @@
+@keyframes roation360{
+
+    0%{
+         transform: rotate(0deg); /* Bottom-left (start) */
+    }
+    100%{
+            transform: rotate(360deg); /* Move DOWN to original bottom-left */
+    }
+
+
+}
+
+
+@keyframes marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+.rotate{
+    animation: roation360 10s linear infinite;
+    /* Behind the boxBg with z-index: 10 */
+}
+
+
+#right-scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 30px;
+}
+
+#right-scroll::-webkit-scrollbar-track {
+  background: #0f141c; /* Right background color */
+}
+
+#right-scroll::-webkit-scrollbar-thumb {
+  background-color: #00cc97; /* Right thumb color */
+  border-radius: 4px;
+}
+
+.button_1{
+
+    height: 40%;
+    width: 100%;
+    font-size: larger;
+    position: relative;
+    color: black;
+    border-radius: 100px;
+    background: #00cc97;
+    padding: 10px 20px;
+    overflow: hidden;
+    z-index: 0;
+    text-align: center;
+}
+
+.button_1::after{
+
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: var(--7, #ff759c);
+    transform: scaley(0);
+    transform-origin:top;
+    z-index: -1;
+    transition: all 0.4s ease-in-out;
+    
+}
+
+.button_1:hover::after{
+    
+    height: 100%;
+    transform: scale(1);
+    transform-origin:top;
+    
+}
+
+.button_1:hover{
+    color: white;
+    cursor:  pointer;
+    transition: all 0.4s ease-in-out;
+    
+}
+
+/* Button 2 */
+
+.button_2{
+
+    height: 40%;
+    width: 100%;
+    font-size: larger;
+    position: relative;
+    color: black;
+    border-radius: 100px;
+    background: #ffdb59;
+   padding: 10px 20px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.button_2::after{
+
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: var(--7, #ff759c);
+    transform: scaley(0);
+    transform-origin:top;
+    z-index: -1;
+    transition: all 0.4s ease-in-out;
+    
+}
+
+.button_2:hover::after{
+    
+    height: 100%;
+    transform: scale(1);
+    transform-origin:top;
+    
+}
+
+.button_2:hover{
+    color: white;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    
+}
+
+/* Image CSS */
+
+
+.img-card{
+    
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    border-radius: 100%;
+    margin-left: -20px;
+   
+    
+}
+
+.img-card img { 
+    
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 100%;
+
+}
+
+.img-card:hover{
+    transform: translateZ(-10px);
+    z-index: 10;
+}
+
+
+
+
+
+
+

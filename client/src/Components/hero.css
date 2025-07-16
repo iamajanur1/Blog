@@ -1,0 +1,12 @@
+.boxBg {
+  background: #1e1e1e;
+  background-blend-mode: soft-light;
+  background-image: url('../assets/dottedBg.png');
+  background-blend-mode: soft-light;
+  /* background-blend-mode: multiply; */
+  opacity: .6;
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}

@@ -1,0 +1,34 @@
+@keyframes color {
+
+    0%{
+
+        color: green;
+    }
+    100%{
+        color: #00cc97;
+     
+    }
+    
+    
+}
+
+#left-scroll::-webkit-scrollbar {
+  width: 0px;
+  height: 30px;
+}
+
+
+
+.color{
+    
+    color: grey;
+}
+
+.color:hover{
+    
+    cursor:pointer;
+    animation: color 1s ease-in-out;
+    color: #00cc97;
+
+
+}

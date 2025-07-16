@@ -1,0 +1,30 @@
+.logo {
+  overflow: hidden;
+}
+
+.logo_track {
+  display: flex;
+  gap: 1.75rem; /* gap-7 ke barabar */
+  width: max-content;
+  animation: scroll-marquee 30s linear infinite;
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo_slides {
+  align-items: center;
+  border: 1px solid #63636385;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  min-height: 80px;
+  min-width: 220px;
+  justify-content: center;
+}

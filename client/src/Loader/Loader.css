@@ -1,0 +1,57 @@
+/* src/Components/Loader.css */
+
+.loader-container {
+  height: 100vh;
+  width: 100vw;
+  background: #0f0f1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hex-ring {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.hex {
+  width: 40px;
+  height: 40px;
+  background-color: #f06292;
+  clip-path: polygon(
+    25% 0%, 75% 0%,
+    100% 50%, 75% 100%,
+    25% 100%, 0% 50%
+  );
+  position: absolute;
+}
+
+/* Pink Positions (around center) */
+.pos-0 { top: 0; left: 60px; }         /* top */
+.pos-1 { top: 30px; left: 110px; }     /* top-right */
+.pos-2 { top: 90px; left: 110px; }     /* bottom-right */
+.pos-3 { top: 120px; left: 60px; }     /* bottom */
+.pos-4 { top: 90px; left: 10px; }      /* bottom-left */
+.pos-5 { top: 30px; left: 10px; }      /* top-left */
+
+.white {
+  background-color: white;
+  z-index: 2;
+}
+
+/* White moves in circular path */
+.moving-white {
+  animation: moveAround 2.5s infinite;
+}
+
+/* Match the same positions in animation */
+@keyframes moveAround {
+  0%   { top: 0px; left: 60px; }      /* pos-0 */
+  16%  { top: 30px; left: 110px; }    /* pos-1 */
+  33%  { top: 90px; left: 110px; }    /* pos-2 */
+  50%  { top: 120px; left: 60px; }    /* pos-3 */
+  66%  { top: 90px; left: 10px; }     /* pos-4 */
+  83%  { top: 30px; left: 10px; }     /* pos-5 */
+  100% { top: 0px; left: 60px; }      /* back to pos-0 */
+}

@@ -1,0 +1,16 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.about-container {
+  scroll-behavior: smooth;
+}
+
+.about::before{
+  
+    color: #909090;
+    content: ":";
+    margin-right: 30px;
+    
+}
+

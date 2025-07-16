@@ -1,0 +1,73 @@
+@keyframes rotate3601{
+  0% {
+    transform: translate(0, 0); /* Bottom-left (start) */
+  }
+
+  25% {
+    transform: translateX(80vw); /* Move RIGHT */
+  }
+
+  50% {
+    transform: translateX(80vw) translateY(-60vh); /* Move UP while staying right */
+  }
+
+  75% {
+    transform: translateY(-60vh); /* Move LEFT (back to left but still UP) */
+  }
+
+  100% {
+    transform: translate(0, 0); /* Move DOWN to original bottom-left */
+  }
+}
+@keyframes rotate3602 {
+ 
+  
+  0% {
+    transform: translate(0, 0); /* Top-right corner */
+  }
+
+  25% {
+    transform: translateX(-80vw); /* ⬅️ Move to top-left */
+  }
+
+  50% {
+    transform: translateX(-80vw) translateY(50vh); /* ⬇️ Move to bottom-left */
+  }
+
+  75% {
+    transform: translateY(50vh); /* ➡️ Move to bottom-right */
+  }
+
+  100% {
+    transform: translate(0, 0); /* ⬆️ Back to top-right */
+  }
+
+
+
+
+}
+
+
+.rotate-slow {
+  
+  /* animation: rotate360 10s linear infinite; */
+  position: relative;
+  z-index: -1; /* Behind the boxBg with z-index: 10 */
+ 
+}
+
+
+.blur-box {
+  width: 500px;
+  height: 300px;
+  
+  filter: blur(170px) brightness(1.6); /*🔥 BRIGHTER + BLUR*/
+  transition: background-color 0.1s ease-in-out;
+}
+
+.box1 {
+  animation: rotate3601 15s linear infinite;
+}
+.box2 {
+  animation: rotate3602 15s linear infinite;
+}
