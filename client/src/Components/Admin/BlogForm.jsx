@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./BlogForm.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function BlogForm({ onClose }) {
   const [formData, setFormData] = useState({
@@ -51,6 +53,7 @@ export default function BlogForm({ onClose }) {
       const data = await res.json();
 
       if (res.ok) {
+     
         setToast({ message: "✅ Blog created!", type: "success" });
         setTimeout(() => {
           setToast({ message: "", type: "" });
@@ -62,7 +65,7 @@ export default function BlogForm({ onClose }) {
       }
     } catch (err) {
       console.error("Upload error:", err);
-      setToast({ message: "❌ Network / server error", type: "error" });
+      
       setTimeout(() => setToast({ message: "", type: "" }), 3000);
     } finally {
       setIsSubmitting(false);

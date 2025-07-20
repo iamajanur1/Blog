@@ -7,7 +7,7 @@ const blogController = require('../controllers/blogController');
 router.post('/', upload.array('images', 3), blogController.createBlog); // up to 3 images
 router.get('/', blogController.getBlogs);
 router.get('/:id', blogController.getBlogById);
-router.put('/:id', blogController.updateBlog);
+router.put('/:id', upload.array('images', 3), blogController.updateBlog);
 router.delete('/:id', blogController.deleteBlog);
 
 module.exports = router;

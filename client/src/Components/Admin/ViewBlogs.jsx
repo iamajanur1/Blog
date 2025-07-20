@@ -1,44 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Popup from "./Popup.jsx";
-
+import toast from "react-hot-toast";
 
 export default function ViewBlogs() {
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(null);
   const navigate = useNavigate();
 
+  // Fetch all blogs
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch("/api/blogs");
+      if (!response.ok) throw new Error("Failed to fetch blogs");
+      const data = await response.json();
+      setBlogs(data);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch("/api/blogs");
-        if (!response.ok) throw new Error("Failed to fetch blogs");
-        const data = await response.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    };
     fetchBlogs();
   }, []);
 
+  // Handle deletion
   const handleDelete = async (id) => {
+    setIsDeleting(id);
     try {
-      const response = await fetch(`http://localhost:5000/api/blogs/${id}`, {
+      const response = await fetch(`/api/blogs/${id}`, {
         method: "DELETE",
       });
-      if (response.ok) setBlogs(blogs.filter((blog) => blog.id !== id));
+
+      if (response.ok) {
+        setBlogs((prev) => prev.filter((blog) => blog._id !== id));
+        
+         toast.success("Blog updated successfully!");
+      } else {
+        toast.error("Failed to delete blog");
+      }
     } catch (error) {
       console.error("Error deleting blog:", error);
+      toast.error("Error deleting blog");
+    } finally {
+      setIsDeleting(null);
     }
   };
 
   const handleEdit = (blog) => {
-    navigate(`/admin/edit-blog/${blog._id}`, { state: blog }); // Use _id from MongoDB
+    navigate(`/admin/edit-blog/${blog._id}`, { state: blog });
+
   };
 
   const handleView = (blog) => setSelectedBlog(blog);
   const closePopup = () => setSelectedBlog(null);
+
   const handleLogout = () => {
     localStorage.removeItem("isAdminAuthenticated");
     navigate("/admin/login");
@@ -56,41 +73,48 @@ export default function ViewBlogs() {
             Logout
           </button>
         </header>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           {blogs.map((blog) => (
-  <div key={blog._id} className="bg-green-100 border border-green-300 p-6 rounded-xl hover:shadow-xl">
-    <h2 className="text-xl font-semibold text-green-700 mb-2">{blog.title}</h2>
-    <p className="text-gray-600 mb-4">{blog.content.substring(0, 50)}...</p>
-    <div className="flex space-x-4">
-      <button
-        onClick={() => handleEdit(blog)}
-        className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-      >
-        Edit
-      </button>
-      <button
-        onClick={() => handleDelete(blog._id)}
-        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-      >
-        Delete
-      </button>
-      <button
-        onClick={() => handleView(blog)}
-        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-      >
-        View
-      </button>
-    </div>
-  </div>
-))}
-        
+            <div
+              key={blog._id}
+              className={`bg-green-100 border border-green-300 p-6 rounded-xl hover:shadow-xl transition-all duration-300 ${
+                isDeleting === blog._id ? "opacity-50 blur-sm pointer-events-none" : ""
+              }`}
+            >
+              <h2 className="text-xl font-semibold text-green-700 mb-2">{blog.title}</h2>
+              <p className="text-gray-600 mb-4">
+                {blog.content.substring(0, 50)}...
+              </p>
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => handleEdit(blog)}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(blog._id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                  disabled={isDeleting === blog._id}
+                >
+                  {isDeleting === blog._id ? "Deleting..." : "Delete"}
+                </button>
+                <button
+                  onClick={() => handleView(blog)}
+                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-        <Link
-          className="text-blue-600 hover:underline"
-          to="/admin/dashboard"
-        >
+
+        <Link className="text-blue-600 hover:underline" to="/admin/dashboard">
           ← Back to Dashboard
         </Link>
+
         {selectedBlog && <Popup blog={selectedBlog} onClose={closePopup} />}
       </div>
     </div>

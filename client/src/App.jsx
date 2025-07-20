@@ -10,6 +10,7 @@ import AdminLogin from "./Components/Admin/AdminLogin.jsx";
 import AdminDashboard from "./Components/Admin/AdminDashboard.jsx";
 import ProtectedRoute from "./Components/Admin/ProtectedRoute.jsx";
 import ViewBlogs from "./Components/Admin/ViewBlogs.jsx"; // Import ViewBlogs
+import EditBlog from "./Components/Admin/EditBlogs.jsx";
 import loader from "./assets/Loader2.mp4";
 
 function App() {
@@ -44,29 +45,40 @@ function App() {
         </div>
       ) : (
         <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetails />} />
+  <Route path="/" element={<Hero />} />
+  <Route path="/blog" element={<Blog />} />
+  <Route path="/blog/:id" element={<BlogDetails />} />
 
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/blogs"
-            element={
-              <ProtectedRoute>
-                <ViewBlogs />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+  {/* Admin Routes */}
+  <Route path="/admin/login" element={<AdminLogin />} />
+  <Route
+    path="/admin/dashboard"
+    element={
+      <ProtectedRoute>
+        <AdminDashboard />
+      </ProtectedRoute>
+    }
+  />
+  <Route
+    path="/admin/blogs"
+    element={
+      <ProtectedRoute>
+        <ViewBlogs key={Date.now()} />
+      </ProtectedRoute>
+    }
+  />
+
+  {/* ✅ Edit Blog Route */}
+  <Route
+    path="/admin/edit-blog/:id"
+    element={
+      <ProtectedRoute>
+        <EditBlog />
+      </ProtectedRoute>
+    }
+  />
+</Routes>
+
       )}
     </>
   );
